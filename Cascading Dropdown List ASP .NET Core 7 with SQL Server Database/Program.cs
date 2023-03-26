@@ -1,7 +1,15 @@
+global using Microsoft.EntityFrameworkCore;
+global using Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Models;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Diagnostics;
+
+using Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. DefaultConnection
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer( builder.Configuration.GetConnectionString("DefaultConnection"))) ;
 
 var app = builder.Build();
 
