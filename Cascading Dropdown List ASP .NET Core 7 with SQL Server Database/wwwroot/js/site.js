@@ -3,25 +3,26 @@
 
 // Write your JavaScript code.YouTube Tutrail  https://www.youtube.com/watch?v=vvJhflLovEs
 
-function Fillcities(stCountryCtrl, UstCityId) {
-    var lsCities = $("#" + LstCityId);
-    LstCityId.empty();
-    var selectedCountry = lstCountryCtrl.options[LstCountryCtrl.selectedIndex].value;
+function Fillcities(lstCountryCtrl, lstCityId) {
+    var lstCities = $("#" + lstCityId);
+    lstCities.empty();
 
-    If(selectedCountry != null && selectedCountry != ''){ 
+    var selectedCountry = lstCountryCtrl.options[lstCountryCtrl.selectedIndex].value;
+
+    if(selectedCountry != null && selectedCountry != ''){ 
         $.getJSON("/Home/GetCitiesByCountry",{ countryId: selectedCountry }, function (cities) {
                 if (cities != null && !jQuery.isEmptyObject(cities)) {
                     $.each(cities, function (index, city) {
 
-                        lsCities.append($('<option/>',
-                            {
+                        lstCities.append($('<option/>',
+                        {
                             value: city.value,
                             text: city.text
                         }));
-                 });
-        };
-     });
-}
+               });
+            };
+         });
+    }
 
-return;
+    return;
 }
