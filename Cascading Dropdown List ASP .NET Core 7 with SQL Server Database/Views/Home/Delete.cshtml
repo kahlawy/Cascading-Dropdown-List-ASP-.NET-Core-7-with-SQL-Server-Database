@@ -1,10 +1,10 @@
 ﻿@model Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Models.Customer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
-<h4>Update Customer</h4>
+<h4>Are you sure to delete a Customer?</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -47,7 +47,7 @@
 
             <br />
             <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-primary" />
+                <input type="submit" value="Confirm delete" class="btn btn-outline-danger" />
 
                 <span>
                     <button type="button" onclick="location.href='@Url.Action("Customers")'" class="btn btn-outline-primary"> Back to List</button>
