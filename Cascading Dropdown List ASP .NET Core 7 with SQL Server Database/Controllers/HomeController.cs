@@ -30,8 +30,8 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Contr
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Customers() 
-        { 
+        public IActionResult Customers()
+        {
             List<Customer> Customers = _context.Customers
                                            .Include(c => c.Country)
                                            .Include(c => c.City)
@@ -52,7 +52,7 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Contr
 
             }).ToList();
 
-            var DefaultItem =  new SelectListItem()
+            var DefaultItem = new SelectListItem()
             {
                 Value = "",
                 Text = "Select Country"
@@ -88,37 +88,53 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Contr
             return CitiesList;
         }
 
-        private List<SelectListItem> GetCities()
+        //private List<SelectListItem> GetCities()
+        //{
+
+        //    var CitiesList = new List<SelectListItem>();
+
+        //    List<City> Cities = _context.Cities.ToList();
+
+        //    CitiesList = Cities.Select(cl => new SelectListItem()
+        //    {
+        //        Value = cl.Id.ToString(),
+        //        Text = cl.CityName
+
+        //    }).ToList();
+
+        //    var DefaultItem = new SelectListItem()
+        //    {
+        //        Value = "",
+        //        Text = "Select City"
+
+        //    };
+
+        //    CitiesList.Insert(0, DefaultItem);
+
+        //    return CitiesList;
+        //}
+
+
+        private string getCountryName(int countryId)
         {
-            var CitiesList = new List<SelectListItem>();
+            string CountryName = _context.Countries.Where(c => c.Id == countryId).SingleOrDefault().countryName;
+            return CountryName;
+        }
 
-            List<City> Cities = _context.Cities.ToList();
-
-            CitiesList = Cities.Select(cl => new SelectListItem()
-            {
-                Value = cl.Id.ToString(),
-                Text = cl.CityName
-
-            }).ToList();
-
-            var DefaultItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "Select City"
-
-            };
-
-            CitiesList.Insert(0, DefaultItem);
-
-            return CitiesList;
+        private string getCityName(int cityId)
+        {
+            string CityName = _context.Cities.Where(c => c.Id == cityId).SingleOrDefault().CityName;
+            return CityName;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             Customer customer = new Customer();
+       
             ViewBag.CountryId = GetCountries();
-            ViewBag.CityId = GetCities();
+
+            ViewBag.CityId = GetCities(customer.CountryId);
 
             return View(customer);
         }
@@ -130,7 +146,7 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Contr
             _context.SaveChanges();
 
 
-            return RedirectToAction (nameof(Customers));  
+            return RedirectToAction(nameof(Customers));
         }
 
         [HttpGet]
@@ -139,5 +155,80 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Contr
             List<SelectListItem> cities = GetCities(countryId);
             return Json(cities);
         }
+
+        private Customer getCustomer(int id)
+        {
+            Customer? customer = _context.Customers
+                .Where(c => c.Id == id).FirstOrDefault();
+
+            if (customer == null)
+            {
+                throw new ArgumentException("Invalid customer id");
+            }
+
+            return customer;
+
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Customer customer = getCustomer(id);
+            ViewBag.CountryName = getCountryName(customer.CountryId);
+            ViewBag.CityName = getCityName(customer.CityId);
+            return View(customer);
+        }
+
+
+        [AutoValidateAntiforgeryToken]
+        [HttpPost]
+        public IActionResult Delete(Customer customer)
+        {
+            _context.Attach(customer);
+            _context.Entry(customer).State = EntityState.Deleted;
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Customers));
+        }
+
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Customer customer = getCustomer(id);
+            ViewBag.CountryName = getCountryName(customer.CountryId);
+            ViewBag.CityName = getCityName(customer.CityId);
+
+            return View(customer);
+        }
+
+
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            Customer customer = getCustomer(id);
+            if (customer != null)
+            {
+                 ViewBag.CountryId = GetCountries();
+                ViewBag.CityId = GetCities(customer.CountryId);
+
+            }
+
+            return View(customer);
+        }
+
+      
+        [AutoValidateAntiforgeryToken]
+        [HttpPost]
+        public IActionResult Edit(Customer customer)
+        {
+            _context.Attach(customer);
+            _context.Entry(customer).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Customers));
+        }
+
+       
     }
 }

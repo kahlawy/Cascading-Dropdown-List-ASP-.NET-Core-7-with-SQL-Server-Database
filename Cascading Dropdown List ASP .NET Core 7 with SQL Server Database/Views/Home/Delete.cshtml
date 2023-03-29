@@ -1,0 +1,63 @@
+﻿@model Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Models.Customer
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4>Update Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Delete">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+           
+                <table class="table-borderless table-responsive-lg">
+                    <tr>
+                        <td><label asp-for="Name" class="control-label"></label></td>
+                        <td><input disabled asp-for="Name" class="col-form-label-sm" /> </td>
+                        <td> <span asp-validation-for="Name" class="text-danger"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label asp-for="Email" class="control-label"></label></td>
+                        <td><input disabled asp-for="Email" class="col-form-label-sm" /> </td>
+                        <td> <span asp-validation-for="Email" class="text-danger"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label asp-for="CountryId" class="control-label"></label></td>
+                        <td> <input disabled type="text" value="@ViewBag.CountryName" class="col-form-label-sm" /></td>
+                        <td>   <input type="hidden" asp-for="CountryId" /> </td>
+                   
+                    </tr>
+
+
+                    <tr>
+                        <td><label asp-for="CityId" class="control-label"></label></td>
+                        <td> <input disabled type="text" value="@ViewBag.CityName" class="col-form-label-sm" /></td>
+                        <td>   <input type="hidden" asp-for="CityId" /> </td>
+
+                    </tr>
+                   
+
+
+                </table>
+   
+      
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+
+                <span>
+                    <button type="button" onclick="location.href='@Url.Action("Customers")'" class="btn btn-outline-primary"> Back to List</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

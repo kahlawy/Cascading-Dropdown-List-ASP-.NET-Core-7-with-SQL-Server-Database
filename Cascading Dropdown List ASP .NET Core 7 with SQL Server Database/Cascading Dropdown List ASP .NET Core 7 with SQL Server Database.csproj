@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database</RootNamespace>
+    <UserSecretsId>3b28eaae-dd31-45c2-905f-395ec7205eed</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

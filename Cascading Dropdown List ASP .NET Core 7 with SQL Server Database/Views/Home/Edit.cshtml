@@ -1,16 +1,16 @@
 ﻿@model Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Models.Customer
 
 @{
-    ViewData["Title"] = "Create";
+   // ViewData["Title"] = "Update";
 }
 
-
-<h4>Add new Customer</h4>
+<h4>Update Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -25,6 +25,7 @@
                 <label asp-for="CountryId" class="control-label"></label>
                 <select id="lsCountry" asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId"
                         onchange="Fillcities(this, 'lsCity');"></select>
+
             </div>
             <div class="form-group">
                 <label asp-for="CityId" class="control-label"></label>
@@ -35,7 +36,7 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
 
                 <span>
-                    <button type="button" onclick="location.href='@Url.Action("Index")'" class="btn btn-outline-primary"> Back to List</button>
+                    <button type="button" onclick="location.href='@Url.Action("Customers")'" class="btn btn-outline-primary"> Back to List</button>
                 </span>
             </div>
         </form>

@@ -8,6 +8,7 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Model
     {
         [Key]
         public int Id { get; set; }
+        [DisplayName("Name:   ")]
         public string? Name { get; set; }
 
         [DataType(DataType.EmailAddress , ErrorMessage = "Please enter valid Email")]
@@ -15,13 +16,13 @@ namespace Cascading_Dropdown_List_ASP_.NET_Core_7_with_SQL_Server_Database.Model
 
         [Required]
         [ForeignKey("Country")]
-        [DisplayName("Country")]
+        [DisplayName("Country: ")]
         public int CountryId { get; set; }
         public virtual Country? Country { get; set; }
 
         [Required]
         [ForeignKey("City")]
-        [DisplayName("City")]
+        [DisplayName("City:   ")]
         public int CityId { get; set; }
         public virtual City? City { get; set; }
 
